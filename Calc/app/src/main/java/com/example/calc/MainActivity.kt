@@ -81,6 +81,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupOperationButton(butId: Int, op: String) {
         findViewById<Button>(butId).setOnClickListener {
+            // If there's already an operation in progress, calculate the result first
+            if (!isNewOperation && operation.isNotEmpty()) {
+                calculateResult()
+            }
+
+            // Store the current number and set up for the next operation
             firstNumber = result.text.toString().replace(",", ".").toDouble()
             operation = op
             isNewOperation = true
@@ -110,10 +116,13 @@ class MainActivity : AppCompatActivity() {
             val resultString = if (resultValue == resultValue.toInt().toDouble()) {
                 resultValue.toInt().toString()
             } else {
-                resultValue.toString().replace(".", ",")
-            }
+                
+                val formatted = String.format("%.6f", resultValue)
+                formatted.replace(Regex(",0+$"), "").replace(Regex("(\\d+\\.\\d*[1-9])0+$"), "$1")
 
+            }
             result.text = resultString
+
             isNewOperation = true
         }
     }
