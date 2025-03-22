@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             val resultString = if (resultValue == resultValue.toInt().toDouble()) {
                 resultValue.toInt().toString()
             } else {
-                
+
                 val formatted = String.format("%.6f", resultValue)
                 formatted.replace(Regex(",0+$"), "").replace(Regex("(\\d+\\.\\d*[1-9])0+$"), "$1")
 
